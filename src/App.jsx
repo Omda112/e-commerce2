@@ -24,7 +24,7 @@ import Checkout from './components/Checkout/Checkout.jsx'
 import Orders from './components/Orders/Orders.jsx'
 import { lazy, Suspense, useContext, useEffect } from 'react'
 import { Offline, Online } from 'react-detect-offline'
-import Contact from './components/contact/contact.jsx'
+// import Contact from './components/contact/contact.jsx'
 import WishList from './components/WishList/WishList.jsx'
 import WishListContextProvider,{WishListContext} from './Context/WishListContext.jsx'
 import RecommendedProducts from './components/RecommendedProducts/RecommendedProducts.jsx'
@@ -61,7 +61,7 @@ const routes = createBrowserRouter([
     {path:"login" , element: <Login/> },
     {path:"checkout/:cartId", element: <ProtectedRoutes><Checkout/></ProtectedRoutes>},
     {path:"allOrders", element: <ProtectedRoutes><Orders/></ProtectedRoutes>},
-    {path:"contact", element: <ProtectedRoutes><Contact/></ProtectedRoutes>},
+    // {path:"contact", element: <ProtectedRoutes><Contact/></ProtectedRoutes>},
     {path:"wishlist", element: <ProtectedRoutes><WishList/></ProtectedRoutes>},
     {path:"Fpassword", element: <ForgetPass/>},
     {path:"verfication", element: <OTPVerfy/> },
