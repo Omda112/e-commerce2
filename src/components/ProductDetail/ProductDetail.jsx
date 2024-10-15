@@ -93,6 +93,8 @@ export default function ProductDetail() {
   },[data])
   
 
+  
+
   return (
     <>
       <div className="row items-center">

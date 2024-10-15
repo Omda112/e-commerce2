@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styles from './RecommendedProducts.module.css';
 import axios from 'axios';
 import { CounterContext } from '../../Context/CounterContext';
@@ -11,13 +11,20 @@ import { WishListContext } from '../../Context/WishListContext';
 
 
 export default function RecommendedProducts() {
-
   let [Loading,setLoading] = useState(false)//
-  let {addProductToCart,cartItemsNo,setCartItemsNo} = useContext(CartContext)
+  let {addProductToCart,cartItemsNo,setCartItemsNo,iconPosition } = useContext(CartContext)
   let {addProductToWishList,WishListNo,setWishListNo} = useContext(WishListContext)
   let [products,setProducts] = useState([])
   let [currentIds,setCuurentId] = useState([])
   let [currentIdsWl,setCuurentIdWl] = useState([])
+  console.log(iconPosition);
+  
+  function getBoundingClientRect(){
+      if (cartIconRef.current) {
+          const cartIconRect = cartIconRef.current.getBoundingClientRect();
+          setBoundries("hi");
+      }
+  }
 
   function getProducts(){
     return axios.get('https://ecommerce.routemisr.com/api/v1/products')
@@ -40,9 +47,9 @@ export default function RecommendedProducts() {
       console.log(currentIds);
     },1000)
     
-   let res = await addProductToCart(id)//
+  let res = await addProductToCart(id)//
   //  console.log("addToCart",data)
-   if(res.status == "success"){
+  if(res.status == "success"){
     let newCartItemsNo = cartItemsNo + 1;
     setCartItemsNo(newCartItemsNo)
     toast.success(res.message,{
@@ -89,31 +96,35 @@ export default function RecommendedProducts() {
 
    
    
-   if(isLoading){
+  if(isLoading){
     return
-     <div className="flex justify-center w-full">
+    <div className="flex justify-center w-full">
     <HashLoader color='#09c'/>
     </div>
-   }
+  }
 
 return (
   <>
   <div className='row'>
     { data?.data?.data.map(product => 
-     <ProductItem 
-       key={product.id} 
-       currentIds={currentIds}
-       loading={Loading}
-       addproduct={addproduct}
-       addWL={addWL}
-       product={product} 
-       
-     />
-   )}
+      <ProductItem 
+        key={product.id} 
+        currentIds={currentIds}
+        loading={Loading}
+        addproduct={addproduct}
+        addWL={addWL}
+        product={product} 
+        // moveToIcon={moveToIcon}
+        // box={box}
+        // setBox={setBox}
+      />
+    )}
   </div>
-   
+  
   </>
 )
 
 }
+
+
 

@@ -25,7 +25,7 @@ export default function Cart(props) {
       let res = await getCart()
       console.log(res);
       
-      setCartId(res.data._id)
+      setCartId(res.data.id)
       setCartInfo(res)
       setCartItemsNo(res.numOfCartItems)
       setIsLoading(false)

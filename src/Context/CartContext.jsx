@@ -1,9 +1,9 @@
 import axios from "axios";//
-import { createContext, useState } from "react";//
+import { createContext, useState } from "react";
 
-const headers = {//
-    token : window.localStorage.getItem("token")//
-}//
+const headers = {
+    token : window.localStorage.getItem("token")
+}
 
 export let CartContext = createContext()   //
 
@@ -54,11 +54,15 @@ function getOrders(userId){
     .catch(error => error.response.data)
 }
 
+
+
 export default function CartContextProvider({children}){
 
     let [cartId,setCartId] = useState(null)
     let [cartItemsNo,setCartItemsNo] = useState(null)
-    return <CartContext.Provider value={{clearCart,cartItemsNo,setCartItemsNo,getOrders,addProductToCart,getCart,removeProduct,updateProductCount,cashOnDelievery,cartId,setCartId}}>
+    const [iconPosition, setIconPosition] = useState({ top: 0, left: 0 })
+
+    return <CartContext.Provider value={{iconPosition,setIconPosition,clearCart,cartItemsNo,setCartItemsNo,getOrders,addProductToCart,getCart,removeProduct,updateProductCount,cashOnDelievery,cartId,setCartId}}>
         {children}
     </CartContext.Provider>
 }
