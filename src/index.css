@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    box-sizing: border-box;
+  }
+  
 
 .row{
     @apply flex flex-wrap
@@ -10,5 +14,4 @@
 .btnnn{
     @apply bg-green-500 p-2 w-full rounded-md text-white mt-5
 }
-
 

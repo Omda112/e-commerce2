@@ -13,12 +13,13 @@ export default function TemplateNmae() {
     <>
     <Navbar/>
 
-      <div className="container mx-auto py-11">
-          <Outlet/>
-      </div>
+    <div className="max-w-full overflow-x-hidden mx-auto px-4 pt-16">
+      <Outlet />
+    </div>
+
       
 
-    <Footer/>
+    {/* <Footer/> */}
     </>
   )
 }

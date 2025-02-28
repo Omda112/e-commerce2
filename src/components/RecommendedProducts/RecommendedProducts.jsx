@@ -96,16 +96,18 @@ export default function RecommendedProducts() {
 
    
    
-  if(isLoading){
-    return
-    <div className="flex justify-center w-full">
-    <HashLoader color='#09c'/>
-    </div>
+   if (isLoading) {
+    return (
+      <div className="flex justify-center w-full">
+        <HashLoader color='#09c' />
+      </div>
+    );
   }
+  
 
 return (
   <>
-  <div className='row'>
+  <div className='row mt-5'>
     { data?.data?.data.map(product => 
       <ProductItem 
         key={product.id} 

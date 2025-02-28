@@ -2,10 +2,8 @@
 import LayOut from './components/LayOut/LayOut.jsx'
 import Register from './components/Register/Register.jsx'
 import Cart from './components/Cart/Cart.jsx'
-import About from './components/About/About.jsx'
 import Categories from './components/Categories/Categories.jsx'
 import Brands from './components/Brands/Brands.jsx'
-import Products from './components/Products/Products.jsx'
 import NotFound from './components/NotFound/NotFound.jsx'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -52,7 +50,6 @@ const routes = createBrowserRouter([
       </Suspense>
     </ProtectedRoutes>  },
     { path:"cart" , element: <ProtectedRoutes><Cart/></ProtectedRoutes>  },
-    { path:"about" , element:<ProtectedRoutes><About/></ProtectedRoutes>   },
     { path:"categories" , element: <ProtectedRoutes><Categories/></ProtectedRoutes>  },
     { path:"brands" , element: <ProtectedRoutes><Brands/></ProtectedRoutes>  },
     { path:"productDetails/:id/:category" , element: <ProtectedRoutes><ProductDetail/></ProtectedRoutes>  },

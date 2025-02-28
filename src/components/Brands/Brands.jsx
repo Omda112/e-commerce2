@@ -1,20 +1,39 @@
-
 import React, { useEffect, useState } from 'react';
-import styles from './Brands.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { decrease, increase } from '../../Store/counter/conter.slice';
+import axios from 'axios';
+import { HashLoader } from 'react-spinners';
 
-export default function Brands () {
-  let {counter} = useSelector((store) => store); console.log(counter);
-  let disptach = useDispatch()
+export default function Brands() {
+  const [brands, setBrands] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios.get('https://ecommerce.routemisr.com/api/v1/brands')
+      .then(res => {
+        setBrands(res.data.data);
+        setLoading(false);
+      })
+      .catch(err => console.error(err));
+  }, []);
+
   return (
-    <>
-  <button onClick={()=>disptach(decrease())} className='☐ bg-red-600 Itext-white p-3 rounded-md mr-10'> - </button>
-  <h1 className='text-4xl'>
-  hello from redux {counter.count}
-  </h1>
-  <button onClick={()=>disptach(increase())} className='☐ bg-green-600 Itext-white p-3 rounded-md'> +</button>
-  </>
-  )
-  }
-  
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold text-center text-green-600 mb-6">Brands</h1>
+
+      {loading ? (
+        <div className="flex justify-center items-center h-64">
+          {/* <i className="fa fa-spinner fa-spin text-4xl text-green-500"></i> */}
+          <HashLoader/>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {brands.map(brand => (
+            <div key={brand._id} className="bg-white shadow-md rounded-xl p-4 hover:shadow-lg transition duration-300">
+              <img src={brand.image} alt={brand.name} className="w-full h-32 object-contain mb-3" />
+              <h2 className="text-center text-lg font-semibold text-gray-800">{brand.name}</h2>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

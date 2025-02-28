@@ -1,135 +1,109 @@
-
 import React, { useContext, useEffect, useState } from 'react';
-import styles from './Cart.module.css';
 import { CartContext } from '../../Context/CartContext';
-import { Await, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { HashLoader } from 'react-spinners';
-import axios from 'axios';
 import CartItem from '../CartItem/CartItem';
 import { Helmet } from 'react-helmet';
-export default function Cart(props) {
 
-  
-    let {cartItemsNo,setCartItemsNo,getCart,removeProduct,updateProductCount,setCartId,cartId,clearCart} = useContext(CartContext)
-    let [count,setCount] = useState(0)
-    let [cartInfo,setCartInfo] = useState(null)
-    let [isLoading,setIsLoading] = useState(true)
-    let [noCartInfo,setNoCartInfo] = useState("")
-    let navigate = useNavigate()
+export default function Cart() {
+    let { cartItemsNo, setCartItemsNo, getCart, removeProduct, updateProductCount, setCartId, cartId, clearCart } = useContext(CartContext);
+    let [cartInfo, setCartInfo] = useState(null);
+    let [isLoading, setIsLoading] = useState(true);
+    let [noCartInfo, setNoCartInfo] = useState("");
+    let navigate = useNavigate();
 
-    useEffect(()=> {
-      getCartInfo()
-    },[])
+    useEffect(() => {
+        getCartInfo();
+    }, []);
 
-    async function getCartInfo(){
-      let res = await getCart()
-      console.log(res);
-      
-      setCartId(res.data.id)
-      setCartInfo(res)
-      setCartItemsNo(res.numOfCartItems)
-      setIsLoading(false)
+    async function getCartInfo() {
+        let res = await getCart();
+        setCartId(res.data.id);
+        setCartInfo(res);
+        setCartItemsNo(res.numOfCartItems);
+        setIsLoading(false);
     }
 
-    async function removeItem(id){
-      let res = await removeProduct(id)
-      setCartInfo(res)
-      setCartItemsNo(res.numOfCartItems)
-      
+    async function removeItem(id) {
+        let res = await removeProduct(id);
+        setCartInfo(res);
+        setCartItemsNo(res.numOfCartItems);
     }
 
-    async function updateProduct(id,count) {
-      if(count == 0) return
-    let res =  await updateProductCount(id,count)
-    console.log(res);
-    setCartInfo(res)
+    async function updateProduct(id, count) {
+        if (count === 0) return;
+        let res = await updateProductCount(id, count);
+        setCartInfo(res);
     }
 
     async function clearAllCart() {
-      // if(count == 0) return
-    let res =  await clearCart()
-    console.log(res);
-    if(res.message == "success"){
-      setNoCartInfo("no items to show")
-    }
-    
-    setCartInfo(res)
+        let res = await clearCart();
+        if (res.message === "success") {
+            setNoCartInfo("No items to show");
+        }
+        setCartInfo(res);
     }
 
-    function goToCheckout(){
-      navigate(`/checkout/${cartId}`)
+    function goToCheckout() {
+        navigate(`/checkout/${cartId}`);
     }
 
     return (
-      <>
-      
-        <div className="application">
+        <>
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>My Cart</title>
             </Helmet>
-        </div>
 
-        {isLoading ? (
-          <div className="flex justify-center w-full">
-            <HashLoader />
-          </div>
-        ) : (
-          <>
-            {noCartInfo ? (
-              noCartInfo
+            {isLoading ? (
+                <div className="flex justify-center items-center h-screen">
+                    <HashLoader color="#10B981" />
+                </div>
             ) : (
-              <>
-                {cartInfo?.data?.products.length ? (
-                  <>
-                    <div className="w-[70%] mx-auto my-10 relative overflow-x-auto shadow-md sm:rounded-lg">
-                      <h1 className="text-4xl text-green-500 text-center font-bold mt-5">Shipping Cart</h1>
-                      <div className="flex justify-between px-7 my-6">
-                        <h2 className="text-gray-600 text-2xl">
-                          Total Cart Items: {cartInfo ? cartInfo.numOfCartItems : 0}
-                        </h2>
-                        <h2 className="text-green-600 text-2xl">
-                          Total Price: {cartInfo?.data?.totalCartPrice}
-                        </h2>
-                      </div>
-                      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                          <tr>
-                            <th scope="col" className="px-16 py-3">
-                              <span className="sr-only">Image</span>
-                            </th>
-                            <th scope="col" className="px-6 py-3">Product</th>
-                            <th scope="col" className="px-6 py-3">Qty</th>
-                            <th scope="col" className="px-6 py-3">Price</th>
-                            <th scope="col" className="px-6 py-3">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {cartInfo.data.products.map((ele) => (
-                            <CartItem
-                              key={ele.id} // Ensure to include a unique key
-                              product={ele}
-                              updateProduct={updateProduct}
-                              removeItem={removeItem}
-                            />
-                          ))}
-                        </tbody>
-                      </table>
-                      <button className="btn" onClick={goToCheckout}>
-                        Continue To Checkout
-                      </button>
-                      <button onClick={clearAllCart} className="btn bg-red-500">
-                        Clear Cart
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  "No cart items"
-                )}
-              </>
+                <div className="container mx-auto p-4">
+                    {noCartInfo ? (
+                        <p className="text-center text-gray-500 text-xl">{noCartInfo}</p>
+                    ) : (
+                        cartInfo?.data?.products.length ? (
+                            <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+                                <h1 className="text-3xl text-green-500 text-center font-bold my-6">Shopping Cart</h1>
+                                <div className="flex flex-col md:flex-row justify-between items-center bg-gray-100 p-4">
+                                    <h2 className="text-gray-700 text-xl">Total Items: {cartInfo.numOfCartItems}</h2>
+                                    <h2 className="text-green-700 text-xl">Total: {cartInfo.data.totalCartPrice} EGP</h2>
+                                </div>
+                                <div className="overflow-x-auto">
+                                    <table className="min-w-full text-sm text-left text-gray-700">
+                                        <thead className="bg-gray-200 text-gray-600 uppercase text-xs">
+                                            <tr>
+                                                <th className="px-4 py-3">Image</th>
+                                                <th className="px-4 py-3">Product</th>
+                                                <th className="px-4 py-3">Qty</th>
+                                                <th className="px-4 py-3">Price</th>
+                                                <th className="px-4 py-3">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {cartInfo.data.products.map((ele) => (
+                                                <CartItem key={ele.id} product={ele} updateProduct={updateProduct} removeItem={removeItem} />
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="flex flex-col md:flex-row justify-between items-center gap-4 p-4">
+                                    <button className="w-full md:w-auto bg-green-500 text-white py-2 px-6 rounded-lg hover:bg-green-600 transition duration-300" onClick={goToCheckout}>
+                                        Continue To Checkout
+                                    </button>
+                                    <button className="w-full md:w-auto bg-red-500 text-white py-2 px-6 rounded-lg hover:bg-red-600 transition duration-300" onClick={clearAllCart}>
+                                        Clear Cart
+                                    </button>
+                                </div>
+                            </div>
+                        ) : (
+                            <p className="text-center text-gray-500 text-xl">No cart items</p>
+                        )
+                    )}
+                </div>
             )}
-          </>
-        )}
-      </>
+        </>
     );
 }
