@@ -4,13 +4,15 @@ import axios from 'axios';
 import { Helmet } from 'react-helmet';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
+import { NavLink } from 'react-router-dom';
 
 export default function TemplateName() {
   const settings = {
     dots: true,
     infinite: true,
     speed: 700,
-    slidesToShow: 6, // افتراضيًا لعرض 6 عناصر
+    slidesToShow: 6,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
@@ -18,36 +20,11 @@ export default function TemplateName() {
     pauseOnHover: true,
     cssEase: "ease-in-out",
     responsive: [
-      {
-        breakpoint: 1536, // 2XL Screens
-        settings: {
-          slidesToShow: 6, 
-        },
-      },
-      {
-        breakpoint: 1280, // XL Screens
-        settings: {
-          slidesToShow: 5,
-        },
-      },
-      {
-        breakpoint: 1024, // Large Screens
-        settings: {
-          slidesToShow: 4,
-        },
-      },
-      {
-        breakpoint: 768, // Medium Screens (Tablet)
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 640, // Small Screens (Mobile)
-        settings: {
-          slidesToShow: 1,
-        },
-      },
+      { breakpoint: 1536, settings: { slidesToShow: 6 } },
+      { breakpoint: 1280, settings: { slidesToShow: 5 } },
+      { breakpoint: 1024, settings: { slidesToShow: 4 } },
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
     ],
   };
 
@@ -56,7 +33,9 @@ export default function TemplateName() {
   const getCategories = () => {
     axios
       .get(`https://ecommerce.routemisr.com/api/v1/categories`)
-      .then(({ data }) => setCategories(data.data))
+      .then(({ data }) => {
+        setCategories(data.data);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -65,28 +44,37 @@ export default function TemplateName() {
   }, []);
 
   return (
-    <div className="w-full bg-green-50 py-5 px-3 sm:px-6 md:px-10 rounded-xl shadow-lg mt-5">
-      <Helmet>
-        <meta charSet="utf-8" />
-        <title>My Category</title>
-      </Helmet>
+    <>
+      <div className="w-full bg-green-50 py-5 px-3 sm:px-6 md:px-10 rounded-xl shadow-lg mt-5">
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>My Category</title>
+        </Helmet>
 
-      <Slider {...settings}>
-        {categories.map((category) => (
-          <div key={category._id} className="p-2">
-            <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-500 transform hover:scale-105 overflow-hidden">
-              <img
-                src={category.image}
-                className="h-40 sm:h-48 md:h-56 lg:h-64 w-full object-cover"
-                alt={category.name}
-              />
-              <h2 className="text-center text-green-700 font-semibold py-2 text-sm sm:text-base capitalize">
-                {category.name}
-              </h2>
+        <Slider {...settings}>
+          {categories.map((category) => (
+            <div key={category._id} className="p-2">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-transform duration-500 transform hover:scale-105 overflow-hidden">
+                <img
+                  src={category.image}
+                  className="h-40 sm:h-48 md:h-56 lg:h-64 w-full object-cover"
+                  alt={category.name}
+                />
+                <h2 className="text-center text-green-700 font-semibold py-2 text-sm sm:text-base capitalize">
+                  {category.name}
+                </h2>
+              </div>
             </div>
-          </div>
-        ))}
-      </Slider>
-    </div>
+          ))}
+        </Slider>
+      </div>
+
+      {/* 🔽 ShoppingCart الآن يظهر كمكون مستقل تحت السلايدر */}
+      <div className="flex justify-center mt-4 h-64">
+        <NavLink to="/cart">
+          <ShoppingCart />
+        </NavLink>
+      </div>
+    </>
   );
 }

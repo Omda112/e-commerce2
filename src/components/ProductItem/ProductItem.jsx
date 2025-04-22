@@ -51,7 +51,7 @@ export default function ProductItem({ product, addproduct, loading, currentIds, 
 
   useEffect(() => {
     if (box) {
-      console.log('Box updated:', box);
+      // console.log('Box updated:', box);
     }
   }, [box]);
 

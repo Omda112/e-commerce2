@@ -6,7 +6,7 @@ import { UserTokenContext } from '../../Context/UserTokenContext';
 import { CartContext } from '../../Context/CartContext';
 import { WishListContext } from '../../Context/WishListContext';
 
-export default function Navbar({ children }) {
+export default function Navbar() {
   const navigate = useNavigate();
   const { token, setToken } = useContext(UserTokenContext);
   const { cartItemsNo, setIconPosition } = useContext(CartContext);
@@ -42,13 +42,7 @@ export default function Navbar({ children }) {
         </div>
 
         <ul className="hidden lg:flex gap-4 text-lg font-medium">
-          {token && [
-            'home',
-            'cart',
-            'brands',
-            'categories',
-            'products'
-          ].map((path) => (
+          {['home', 'cart', 'brands', 'categories', 'products', 'orders'].map((path) => (
             <li key={path}>
               <NavLink
                 to={path}
@@ -116,22 +110,20 @@ export default function Navbar({ children }) {
         <button className="text-2xl p-4" onClick={() => setMenuOpen(false)}>
           <i className="fa fa-times"></i>
         </button>
-        {token && (
-          <ul className='flex flex-col gap-4 text-lg font-medium p-4'>
-            {['home', 'cart', 'brands', 'categories', 'products'].map((path) => (
-              <li key={path}>
-                <NavLink
-                  to={path}
-                  className={({ isActive }) => `${styles.navLink} ${isActive ? styles.activeLink : ''}`}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {path.charAt(0).toUpperCase() + path.slice(1)}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-        )}
+        <ul className='flex flex-col gap-4 text-lg font-medium p-4'>
+          {['home', 'cart', 'brands', 'categories', 'products', 'orders'].map((path) => (
+            <li key={path}>
+              <NavLink
+                to={path}
+                className={({ isActive }) => `${styles.navLink} ${isActive ? styles.activeLink : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {path.charAt(0).toUpperCase() + path.slice(1)}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
       </div>
     </nav>
   );
-} 
+}

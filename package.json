@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.6.0",
-    "@react-three/fiber": "^8.2.2",
+    "@react-three/drei": "^9.0.0",
+    "@react-three/fiber": "^8.18.0",
     "@reduxjs/toolkit": "^2.2.7",
     "@tanstack/react-query": "^5.55.4",
     "@tanstack/react-query-devtools": "^5.55.4",
@@ -20,9 +21,10 @@
     "flowbite": "^2.5.1",
     "flowbite-react": "^0.10.1",
     "formik": "^2.4.6",
-    "framer-motion": "^11.8.0",
+    "framer-motion": "^11.18.2",
     "framer-motion-3d": "^11.8.0",
     "generate-react-cli": "^8.4.8",
+    "gsap": "^3.12.7",
     "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-detect-offline": "^2.4.5",
@@ -38,7 +40,7 @@
     "react-spinners": "^0.14.1",
     "react-use-measure": "^2.1.1",
     "slick-carousel": "^1.8.1",
-    "three": "^0.137.0",
+    "three": "^0.137.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {

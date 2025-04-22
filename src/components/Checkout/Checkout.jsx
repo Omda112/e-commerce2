@@ -17,7 +17,7 @@ export default function Checkout() {
   async function pay() {
     const res = await cashOnDelievery(url, myForm.values);
     if (res.status === "success") {
-      isOnlinePayment ? window.location.href = res.session.url : navigate('/allOrder');
+      isOnlinePayment ? window.location.href = res.session.url : navigate('/orders');
     } else {
       console.log("Error:", res);
     }

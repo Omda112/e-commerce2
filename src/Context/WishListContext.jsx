@@ -14,10 +14,6 @@ function addProductToWishList(productId) {
         { headers }
     )
     .then(res => {
-        // ✅ تحديث عدد العناصر بعد الإضافة
-        getWishList().then(data => {
-            setWishListNo(data.count || data.data.length); // تحديث عدد العناصر
-        });
         return res.data;
     })
     .catch(err => err.response.data);
@@ -52,16 +48,15 @@ async function clearWishList() {
 
 export default function WishListContextProvider({ children }) {
     let [wishListId, setWishListId] = useState(null);
-    let [wishListNo, setWishListNo] = useState(0); // عدد العناصر
+    let [wishListNo, setWishListNo] = useState(0);
 
-    // ✅ تحميل عدد العناصر عند بداية تحميل الموقع
     useEffect(() => {
         if (headers.token) {
             getWishList().then(data => {
-                setWishListNo(data.count || data.data.length); // تحديث العدد
+                setWishListNo(data.count || data.data.length);
             });
         }
-    }, []); // يتم التنفيذ مرة واحدة فقط عند تحميل الصفحة
+    }, []);
 
     return (
         <WishListContext.Provider value={{

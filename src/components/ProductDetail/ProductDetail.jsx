@@ -7,7 +7,6 @@ import Slider from "react-slick";
 import { HashLoader } from 'react-spinners';
 import { useQuery } from '@tanstack/react-query';
 import { CartContext } from '../../Context/CartContext.jsx';
-// import { Toast } from 'flowbite-react';
 import toast from 'react-hot-toast';
 import { WishListContext } from '../../Context/WishListContext.jsx';
 
@@ -17,7 +16,8 @@ export default function ProductDetail() {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
+    adaptiveHeight: true
   };
  
   let { id, category } = useParams();
@@ -32,8 +32,6 @@ export default function ProductDetail() {
     getProductDetails();
     getRelatedProducts();
   },[id]);
-
- 
 
   function getRelatedProducts() {
     axios.get('https://ecommerce.routemisr.com/api/v1/products')
@@ -78,63 +76,83 @@ export default function ProductDetail() {
     }
     setLoading(false);
   }
+  
   let {data,isLoading} = useQuery({
     queryKey: ['Details',id],
     queryFn: getProductDetails,
-    // refetchInterval:3000,
     gcTime:3000,
     select: (data)=> data?.data.data
   })
  
-
   useEffect(()=>{
     console.log(data)
     setProductDetails(data)
   },[data])
   
-
-  
-
   return (
-    <>
-      <div className="row items-center">
-        
-          {isLoading ?
-            <div className="flex justify-center w-full">
-            <HashLoader />
-            </div>
-          : (
-            <>
-              <div className="w-2/4">
-                <Slider {...settings}>
+    <div className="container mx-auto px-4">
+      {isLoading ? (
+        <div className="flex justify-center items-center py-16 w-full">
+          <HashLoader color='#16a34a' />
+        </div>
+      ) : (
+        <>
+          <div className="flex flex-col md:flex-row gap-6 py-8">
+            {/* Product Images */}
+            <div className="w-full md:w-1/2 lg:w-2/5 mb-6 md:mb-0">
+              <div className="max-w-md mx-auto">
+                <Slider {...settings}>  
                   {productDetails?.images?.map((img, index) => (
-                    <img key={index} src={img} className='w-full' alt="" />
+                    <div key={index} className="px-2">
+                      <img src={img} className="w-full h-64 md:h-80 object-contain mx-auto" alt="Product" />
+                    </div>
                   ))}
                 </Slider>
               </div>
-              <div className="w-2/4">
-                <h1 className='font-bold text-3xl text-slate-800'>{productDetails?.title}</h1>
-                <p>{productDetails?.description}</p>
-                <span className='mb-4 block'>{productDetails?.category?.name}</span>
-                <div className='flex justify-between'>
-                  <span>{productDetails?.price} EGP</span>
-                  <span>{productDetails?.ratingsAverage} <i className='fa fa-star text-yellow-300'></i></span>
-                </div>
-                <button className='btn' onClick={()=>addToCart(productDetails.id)}>Add to cart</button>
-                <button className='btn' onClick={()=>addToWL(productDetails.id)}>Add to WishList </button>
+            </div>
+            
+            {/* Product Info */}
+            <div className="w-full md:w-1/2 lg:w-3/5">
+              <h1 className='font-bold text-2xl md:text-3xl text-slate-800 mb-3'>{productDetails?.title}</h1>
+              <p className="text-gray-700 mb-4">{productDetails?.description}</p>
+              <span className='mb-4 block text-gray-600'>{productDetails?.category?.name}</span>
+              
+              <div className='flex justify-between items-center mb-6'>
+                <span className="text-lg font-semibold">{productDetails?.price} EGP</span>
+                <span className="flex items-center">
+                  {productDetails?.ratingsAverage} 
+                  <i className='fa fa-star text-yellow-300 ml-1'></i>
+                </span>
               </div>
-            </>
-          )}
-        </div>
+              
+              <div className="flex flex-wrap gap-4">
+                <button 
+                  className='btn bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded transition-colors' 
+                  onClick={()=>addToCart(productDetails.id)}
+                >
+                  Add to cart
+                </button>
+                <button 
+                  className='btn border border-green-500 text-green-500 hover:bg-green-50 py-2 px-4 rounded transition-colors' 
+                  onClick={()=>addToWL(productDetails.id)}
+                >
+                  Add to WishList
+                </button>
+              </div>
+            </div>
+          </div>
 
-      <div className="row">
-        <h2 className='text-gray-950 font-extrabold text-3xl my-9'>Related Products</h2>
+          {/* Related Products */}
+          <div className="row">
+        <h2 className='text-green-500 font-extrabold text-3xl my-9'>Related Products</h2>
         <div className="row">
           {relatedProducts.map(product => (
             <ProductItem key={product._id} product={product} addproduct={addToCart} addWL={addToWL} />
           ))}
         </div>
       </div>
-    </>
+        </>
+      )}
+    </div>
   );
 }

@@ -16,21 +16,21 @@ export default function UserTokenContextProvider({children}){
     function convertToken(){
         let data = jwtDecode(window.localStorage.getItem("token"))
         setUserId(data.id)
-        console.log(data);
+        // console.log(data);
         
     }
 
     useEffect(()=>{
         if(window.localStorage.getItem("token")){
             setToken(window.localStorage.getItem("token"))
-            console.log("helloz");
+            // console.log("helloz");
             convertToken()
-            console.log(userId)
+            // console.log(userId)
         }
     },[]
     )
 
-        console.log(userId)
+        // console.log(userId)
     return <UserTokenContext.Provider value={{token,setToken,convertToken,userId}}>
         {children}
     </UserTokenContext.Provider>

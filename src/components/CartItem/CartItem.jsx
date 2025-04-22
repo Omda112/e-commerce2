@@ -4,13 +4,9 @@ import styles from './CartItem.module.css';
 
 export default function CartItem({product,updateProduct,removeItem,showAction}) {
 
-  console.log(showAction)
-
   if(showAction == undefined){
     showAction = true
   }
-  console.log(showAction)
-
     let [count,setCount] = useState(0)
     useEffect(()=> {},[])
   return (

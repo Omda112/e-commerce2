@@ -8,13 +8,13 @@ import NotFound from './components/NotFound/NotFound.jsx'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './components/Login/Login.jsx'
-import CounterContextProvider, { CounterContext } from './Context/CounterContext.jsx'
+import CounterContextProvider from './Context/CounterContext.jsx'
 import UserTokenContextProvider from './Context/UserTokenContext.jsx'
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes.jsx'
 import ProductDetail from './components/ProductDetail/ProductDetail.jsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import CartContextProvider, { CartContext } from './Context/CartContext.jsx'
+import { CartContext } from './Context/CartContext.jsx'
 import { Toaster } from 'react-hot-toast';
 import store from './Store/store.jsx'
 import { Provider } from 'react-redux'
@@ -24,7 +24,7 @@ import { lazy, Suspense, useContext, useEffect } from 'react'
 import { Offline, Online } from 'react-detect-offline'
 // import Contact from './components/contact/contact.jsx'
 import WishList from './components/WishList/WishList.jsx'
-import WishListContextProvider,{WishListContext} from './Context/WishListContext.jsx'
+// import WishListContextProvider,{WishListContext} from './Context/WishListContext.jsx'
 import RecommendedProducts from './components/RecommendedProducts/RecommendedProducts.jsx'
 import ForgetPass from './components/ForgetPass/ForgetPass.jsx'
 import OTPVerfy from './components/OTP/OTPVerfy.jsx'
@@ -57,7 +57,7 @@ const routes = createBrowserRouter([
     { path:"products" , element: <ProtectedRoutes><RecommendedProducts/></ProtectedRoutes>},
     {path:"login" , element: <Login/> },
     {path:"checkout/:cartId", element: <ProtectedRoutes><Checkout/></ProtectedRoutes>},
-    {path:"allOrders", element: <ProtectedRoutes><Orders/></ProtectedRoutes>},
+    {path:"orders", element: <ProtectedRoutes><Orders/></ProtectedRoutes>},
     // {path:"contact", element: <ProtectedRoutes><Contact/></ProtectedRoutes>},
     {path:"wishlist", element: <ProtectedRoutes><WishList/></ProtectedRoutes>},
     {path:"Fpassword", element: <ForgetPass/>},
@@ -77,7 +77,7 @@ function App() {
   async function getCartInfo(){
     let res = await getCart()
     setCartItemsNo(res.numOfCartItems)
-    setIsLoading(false)
+    // setIsLoading(false)
   }
   
   useEffect(()=>{

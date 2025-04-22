@@ -43,44 +43,6 @@ export default function Register() {
     }
 
 
-    // function validateRegister(values){
-    //   const errors = {}
-
-    //   if(!values.name){
-    //     errors.name = "Required"
-    //   }else if(!/^[A-Z][a-z]{3,5}$/.test(values.name)){
-    //     errors.name = "Name must start with capital letter"
-    //   }
-
-    //   if(!values.email){
-    //     errors.email = "Required"
-    //   }else if(!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(values.email)){
-    //     errors.email = "Invalid emadil"
-    //   }
-      
-    //   if(!values.password){
-    //     errors.password = "Required"
-    //   }else if(!/^[A-Z][a-z0-9]{3,5}$/.test(values.password)){
-    //     errors.password = "Invalid emadil"
-    //   }
-
-
-    //   if(!values.rePassword){
-    //     errors.rePassword = "Required"
-    //   }else if(values.password != values.rePassword){
-    //     errors.rePassword = "rePassword should match password"
-    //   }
-
-
-    //   if(!values.rePassword){
-    //     errors.rePassword = "Required"
-    //   }else if(!/^01[0125][0-9]{8}$/.test(values.phone)){
-    //     errors.rePassword = "Phone invalid"
-    //   }
-
-    //   return errors;
-    // }
-
     const validationSchema = ()=> {
       return Yup.object({
         name:Yup.string().min(3,"not less than 3").max(10,'max is 10').required('Required'),
@@ -147,7 +109,7 @@ export default function Register() {
 
 
             <div className="mb-5">
-              <label htmlFor="rePassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+              <label htmlFor="rePassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">rePassword</label>
               <input type="password" id="rePassword" name='rePassword' onBlur={myForm.handleBlur} onChange={myForm.handleChange} value={myForm.values.rePassword} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" />
             </div>
             {myForm.errors.rePassword && myForm.touched.rePassword?<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
@@ -157,7 +119,7 @@ export default function Register() {
 
 
             <div className="mb-5">
-              <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+              <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your phone</label>
               <input type="tel" id="phone" name='phone' onBlur={myForm.handleBlur} onChange={myForm.handleChange} value={myForm.values.phone} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" />
             </div>
             {myForm.errors.phone && myForm.touched.phone?<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">

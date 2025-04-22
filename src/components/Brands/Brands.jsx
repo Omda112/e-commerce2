@@ -20,9 +20,8 @@ export default function Brands() {
       <h1 className="text-3xl font-bold text-center text-green-600 mb-6">Brands</h1>
 
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          {/* <i className="fa fa-spinner fa-spin text-4xl text-green-500"></i> */}
-          <HashLoader/>
+        <div className="flex justify-center items-center h-screen">
+          <HashLoader color="#10B981" />
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
